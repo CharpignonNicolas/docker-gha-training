@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  myapp:
+    image: myapp:1
+    container_name: myapp_container
+    ports:
+      - "8080:5050"
+    restart: unless-stopped
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_NAME: myappdb
+      DB_USER: myuser
+      DB_PASSWORD_FILE: /run/secrets/db_password
+    secrets:
+      - db_password
+
+  db:
+    image: postgres:16.3 
+    container_name: postgres_container
+    restart: unless-stopped
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: myappdb
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+    secrets:
+      - db_password
+
+volumes:
+  postgres_data:
+
+secrets:
+  db_password:
+    file: ./secrets/db_password.txt
