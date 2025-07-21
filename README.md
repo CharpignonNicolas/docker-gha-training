@@ -6,6 +6,4 @@ The goal of this training is to learn how to use Docker and GitHub Actions to bu
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-test
-
-test
+tets action
